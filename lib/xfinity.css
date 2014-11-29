@@ -1,0 +1,70 @@
+
+@import url(http://fonts.googleapis.com/css?family=Lato:100,400,700,900);
+
+.xfinity_wrapper{
+	position: fixed;
+	width: 90vw;
+	height: 115px;
+	background-color: red;
+	z-index: 999990;
+	left: 5vw;
+	bottom: 5vw;
+	overflow: hidden;
+}
+
+.container{
+	height: 115px;
+	overflow: hidden;
+}
+
+.channels{
+	-webkit-transition: all 0.2s ease-in;
+}
+
+.channel{
+	min-height: 115px;
+ 	background-color: rgb(255, 205,0);
+ 	display: flex;
+ 	flex-direction: column;
+}
+
+.channel .channel_title{
+	text-transform: uppercase;
+    font-family: 'Lato';
+    font-size: 3em;
+}
+
+.channel .playing_now{
+	display: block;
+	font-family: 'Lato';
+	font-size: 1.5em;
+}
+
+.channel .playing_now .title {
+	display: inline-block;
+	float: left;
+}
+
+.channel .playing_now .time {
+	display: inline-block;
+	float: right;
+	color: gray;
+}
+
+.channel .playing_next{
+	display: block;
+	font-family: 'Lato';
+	font-size: 1.5em;
+}
+
+.channel .playing_next .title {
+	display: inline-block;
+	float: left;
+}
+
+.channel .playing_next .time {
+	display: inline-block;
+	float: right;
+	color: gray;
+}
+

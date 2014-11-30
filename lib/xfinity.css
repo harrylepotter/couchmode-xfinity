@@ -4,7 +4,7 @@
 .xfinity_wrapper{
 	position: fixed;
 	width: 90vw;
-	height: 115px;
+	height: 150px;
 	background-color: red;
 	z-index: 999990;
 	left: 5vw;
@@ -12,6 +12,15 @@
 	overflow: hidden;
 	color: black;
 	-webkit-transition: all 0.2s ease-in;
+}
+
+.channel_wrap{
+	overflow: hidden;
+}
+
+.current_time{
+	text-align: right;
+	font-size: 1.5em;
 }
 
 .container{
@@ -30,16 +39,24 @@
  	flex-direction: column;
 }
 
+.channel .channel_image{
+	position: static;
+	/*top: 51px;*/
+	left: 7px;
+}
+
 .channel .channel_title{
 	text-transform: uppercase;
     font-family: 'Lato';
     font-size: 3em;
+    padding-left: 115px;
 }
 
 .channel .playing_now{
 	display: block;
 	font-family: 'Lato';
 	font-size: 1.5em;
+	padding-left: 115px;
 }
 
 .channel .playing_now .title {
@@ -57,6 +74,7 @@
 	display: block;
 	font-family: 'Lato';
 	font-size: 1.5em;
+	padding-left: 115px;
 }
 
 .channel .playing_next .title {

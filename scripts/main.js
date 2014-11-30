@@ -1,13 +1,11 @@
 var offset = 0;
+var originalOffset = 0;
+
 chrome.extension.sendMessage({}, function(response) {
 	var readyStateCheckInterval = setInterval(function() {
 	if (document.readyState === "complete") {
 		clearInterval(readyStateCheckInterval);
 
-		// ----------------------------------------------------------
-		// This part of the script triggers when page is done loading
-		console.log("Shit. This message was sent from scripts/main.js");
-	
 		StreamingLive.init();
 		
 		var flashy = $('object');
@@ -24,19 +22,60 @@ chrome.extension.sendMessage({}, function(response) {
 		}, 1000);
 
 	    KeyboardJS.on('p', function(){
+            showOSD();
 	        offset = offset - 115;
 	        $('.channels').css('margin-top', offset + 'px');
 	    });
 
 	    KeyboardJS.on('o', function(){
+            showOSD();
 	        offset = offset + 115;
 	        $('.channels').css('margin-top', offset + 'px');
 	    });
+
+        KeyboardJS.on('w', function(){
+            showOSD();
+            var channelUrl = getChannelUrl();
+            console.log('channelUrl', channelUrl);
+            window.location.href = channelUrl;
+        });
 
 	
 	}
 	}, 10);
 });
+
+var showOSD = function(){
+    if(window.osdHider != null)
+        clearTimeout(window.osdHider);
+   // $('.xfinity_wrapper').css('opacity', 1);
+    hideOSD();
+};
+
+window.osdHider = null;
+var hideOSD = function(){
+    window.osdHider = setTimeout(function() {
+        //$('.xfinity_wrapper').css('opacity', 0);
+        resetOffset();
+    }, 10000);
+
+}
+
+var resetOffset = function(){
+    offset = originalOffset;
+    $('.channels').css('margin-top', offset + 'px');
+};
+
+
+var getChannelUrl = function(){
+    var foo = Math.abs(offset);
+    var index = foo / 115;
+    var el = $('.xfinity_wrapper .channels')[0].children[index];
+    var url = $(el).attr('data-tv-url');
+    return url;
+};
+
+window.listings = [];
 
 var StreamingLive = {
     init: function() {
@@ -91,6 +130,8 @@ var StreamingLive = {
         return b.promise()
     },
     renderListings: function(z) {
+        console.log('listings: ', z);
+
 		var wrapper = document.createElement('div');
 		$(wrapper).addClass('xfinity_wrapper');
 		$(document.body).append(wrapper);
@@ -103,11 +144,13 @@ var StreamingLive = {
         $(wrapper).append(parent);
 
     	$.each(z, function(index, item) {
+            var channelUrl = item._links.website.href;
     		var channelTitle = item.title;
     		var listings = item.listings;
             
             var channelEl = document.createElement('div');
             $(channelEl).addClass('channel');
+            $(channelEl).attr('data-tv-url', channelUrl);
 
             var channelTitleEl = document.createElement('div');
             $(channelTitleEl).addClass('channel_title');
@@ -156,17 +199,24 @@ var StreamingLive = {
                 $(nextEl).append(nextTitleEl);
                 $(nextEl).append(nextTimeEl);
 
-
-
                
                 $(channelEl).append(nowEl);
                 $(channelEl).append(nextEl);
     		});
 
             $(parent).append(channelEl);
+
+            if(channelUrl == window.location.href){
+                offset = 0 - (index * 115);
+                originalOffset = offset;
+                $('.channels').css('margin-top', offset + 'px');
+            }
+
+
+
     	});
 
-
+        hideOSD();
         // var B, l, d, h, n, x, v = "?cmpid=chrome_ext_1",
         //     w = "?height=60&width=100&bg=BLACK",
         //     c = "http://xfinitytv.comcast.net/watch-live-tv/",
@@ -425,7 +475,7 @@ var StreamingLive = {
         return e
     },
     displayErrorMessage: function(d, b, c) {
-        $("nav").append('<aside role="status"><h5>' + chrome.i18n.getMessage("errorText") + '</h5><a title="Refresh" href="popup.html">Please click to refresh</a><br/><span class="error">or visit<br/><a target="_blank" title="http://xfinitytv.comcast.net/watch-live-tv/" href="http://xfinitytv.comcast.net/watch-live-tv/">XFINITY&reg; TV Go Live streams</a></span><br/><br/><strong>' + b + ": " + d.statusText + " [" + d.status + "]<br/>Version: " + StreamingLive.getVersion() + "</strong></aside>")
+       // $("nav").append('<aside role="status"><h5>' + chrome.i18n.getMessage("errorText") + '</h5><a title="Refresh" href="popup.html">Please click to refresh</a><br/><span class="error">or visit<br/><a target="_blank" title="http://xfinitytv.comcast.net/watch-live-tv/" href="http://xfinitytv.comcast.net/watch-live-tv/">XFINITY&reg; TV Go Live streams</a></span><br/><br/><strong>' + b + ": " + d.statusText + " [" + d.status + "]<br/>Version: " + StreamingLive.getVersion() + "</strong></aside>")
     },
     displayFooter: function() {
         $("footer").append('<a title="My Account" href="https://customer.comcast.com/?CMPID=xtvg_footer" target="_blank">My Account</a><a title="' + chrome.i18n.getMessage("shopText") + '" href="http://www.comcast.com/upgrade?CMP=ILCXFICOMMM9DEY" target="_blank">' + chrome.i18n.getMessage("shopText") + '</a><a title="' + chrome.i18n.getMessage("ppText") + '" href="http://xfinity.comcast.net/privacy/" target="_blank">' + chrome.i18n.getMessage("ppText") + '</a> <a title="' + chrome.i18n.getMessage("tosText") + '" href="http://xfinity.comcast.net/terms/" target="_blank">' + chrome.i18n.getMessage("tosText") + "</a>")

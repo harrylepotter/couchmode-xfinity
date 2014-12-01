@@ -49,13 +49,13 @@ var resizeVideo = function () {
 var showOSD = function() {
     if(window.osdHider != null)
         clearTimeout(window.osdHider);
-   // $('.xfinity_wrapper').css('opacity', 1);
+    $('.xfinity_wrapper').css('opacity', 1);
     hideOSD();
 };
 
 var hideOSD = function () {
     window.osdHider = setTimeout(function () {
-        //$('.xfinity_wrapper').css('opacity', 0);
+        $('.xfinity_wrapper').css('opacity', 0);
         resetOffset();
     }, 10000);
 }
@@ -93,7 +93,7 @@ var initOSD = function () {
 
 var updateTime = function(){
     var opacity = $('.xfinity_wrapper').css('opacity');
-    if(opacity != "1")
+    if(opacity != "1") 
         return;
     
     var tf = "h:mm:ss a";
@@ -111,6 +111,13 @@ chrome.extension.sendMessage({}, function(response) {
             resizeVideo();
 
             setInterval(updateTime, 1000);
+
+            setInterval(function(){
+                var opacity = $('.xfinity_wrapper').css('opacity');
+                if(opacity == "0"){
+                    StreamingLive.render();
+                }
+            }, 300000);
 
             //keyboard responders for channel up/down
             KeyboardJS.on('p', chUp);
@@ -177,10 +184,18 @@ var StreamingLive = {
             $(channelEl).addClass('channel');
             $(channelEl).attr('data-tv-url', channelUrl);
 
+            var left = document.createElement('div');
+            $(left).addClass('left');
+            $(channelEl).append(left);
+
+            var right = document.createElement('div');
+            $(right).addClass('right');
+            $(channelEl).append(right);
+
             var channelTitleEl = document.createElement('div');
             $(channelTitleEl).addClass('channel_title');
             $(channelTitleEl).text(channelTitle);
-            $(channelEl).append(channelTitleEl);
+            $(right).append(channelTitleEl);
 
             var channelImageUrl = "http://xfinitytv.comcast.net/xtvapi/tve/image/logo/" + id + "?height=60&width=100&bg=BLACK";
             var channelImgEl = document.createElement('img');
@@ -188,10 +203,8 @@ var StreamingLive = {
             var channelImg  = document.createElement('div');
             $(channelImg).addClass('channel_image');
             $(channelImg).append(channelImgEl);
-            $(channelEl).append(channelImg);
+            $(left).append(channelImg);
 
-            //var top = (index * 115) + 51;
-            //$(channelImg).css('top', top + 'px');
 
     		$.each(listings, function(i, listing){
                 var tf = "h:mm:ss a";
@@ -234,8 +247,8 @@ var StreamingLive = {
                 $(nextEl).append(nextTimeEl);
 
                
-                $(channelEl).append(nowEl);
-                $(channelEl).append(nextEl);
+                $(right).append(nowEl);
+                $(right).append(nextEl);
     		});
 
             $(parent).append(channelEl);

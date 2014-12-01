@@ -1,17 +1,142 @@
 <!doctype html>
-<style type="text/css">
-	#mainPopup {
-		padding: 10px;
-		height: 200px;
-		width: 400px;
-		font-family: Helvetica, Ubuntu, Arial, sans-serif;
-	}
-	h1 {
-		font-size: 2em;
-	}
-</style>
+<html>
+	<head>
+		<script src="/lib/jquery-1.8.3.min.js"></script>
+		<script src="/scripts/popup.js"></script>
+	</head>
+	<body>
+		<style type="text/css">
 
-<div id="mainPopup">
-<h1>Hello Skeleton Extension!</h1>
-<p>To shut this popup down, edit the manifest file and remove the "default popup" key. To edit it, just edit fragments/popup.html. The CSS is there, too.</p>
-</div>
+			@import url(http://fonts.googleapis.com/css?family=Lato:100,400,700,900);
+			
+			#mainPopup {
+				font-family: Helvetica, Ubuntu, Arial, sans-serif;
+			}
+
+			.logo{
+				display: flex;
+				flex-direction: row;
+			}
+
+			.logo_wrap{
+				width: 10em;
+			}
+
+			.title{
+				font-size: 8em;
+				font-family: Lato;
+				font-weight: 900;
+				padding-top: 0.15em;
+			}
+
+			h1 {
+				font-size: 2em;
+			}
+
+			body{
+				background-color: rgb(255, 205,0);
+			}
+
+			/* Keyboard styling. From KEYS.css - copyright 2010 Michael Hüneburg */
+			kbd, .key {
+				display: inline;
+				display: inline-block;
+				min-width: 1em;
+				padding: .2em .3em;
+				font: normal .85em/1 "Lucida Grande", Lucida, Arial, sans-serif;
+				text-align: center;
+				text-decoration: none;
+				-moz-border-radius: .3em;
+				-webkit-border-radius: .3em;
+				border-radius: .3em;
+				border: none;
+				cursor: default;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				user-select: none;
+			}
+
+			kbd[title], .key[title] {
+				cursor: help;
+			}
+
+			/* Dark style for display on light background. This is the default style. */
+			kbd, kbd.dark, .dark-keys kbd, .key, .key.dark, .dark-keys .key {
+				background: rgb(80, 80, 80);
+				background: -moz-linear-gradient(top, rgb(60, 60, 60), rgb(80, 80, 80));
+				background: -webkit-gradient(linear, left top, left bottom, from(rgb(60, 60, 60)), to(rgb(80, 80, 80)));
+				color: rgb(250, 250, 250);
+				text-shadow: -1px -1px 0 rgb(70, 70, 70);
+				-moz-box-shadow: inset 0 0 1px rgb(150, 150, 150), inset 0 -.05em .4em rgb(80, 80, 80), 0 .1em 0 rgb(30, 30, 30), 0 .1em .1em rgba(0, 0, 0, .3);
+				-webkit-box-shadow: inset 0 0 1px rgb(150, 150, 150), inset 0 -.05em .4em rgb(80, 80, 80), 0 .1em 0 rgb(30, 30, 30), 0 .1em .1em rgba(0, 0, 0, .3);
+				box-shadow: inset 0 0 1px rgb(150, 150, 150), inset 0 -.05em .4em rgb(80, 80, 80), 0 .1em 0 rgb(30, 30, 30), 0 .1em .1em rgba(0, 0, 0, .3);
+			}
+
+			/* Light style for display on dark background. */
+			kbd.light, .light-keys kbd, .key.light, .light-keys .key {
+				background: rgb(250, 250, 250);
+				background: -moz-linear-gradient(top, rgb(210, 210, 210), rgb(255, 255, 255));
+				background: -webkit-gradient(linear, left top, left bottom, from(rgb(210, 210, 210)), to(rgb(255, 255, 255)));
+				color:  rgb(50, 50, 50);
+				text-shadow: 0 0 2px rgb(255, 255, 255);
+				-moz-box-shadow: inset 0 0 1px rgb(255, 255, 255), inset 0 0 .4em rgb(200, 200, 200), 0 .1em 0 rgb(130, 130, 130), 0 .11em 0 rgba(0, 0, 0, .4), 0 .1em .11em rgba(0, 0, 0, .9);
+				-webkit-box-shadow: inset 0 0 1px rgb(255, 255, 255), inset 0 0 .4em rgb(200, 200, 200), 0 .1em 0 rgb(130, 130, 130), 0 .11em 0 rgba(0, 0, 0, .4), 0 .1em .11em rgba(0, 0, 0, .9);
+				box-shadow: inset 0 0 1px rgb(255, 255, 255), inset 0 0 .4em rgb(200, 200, 200), 0 .1em 0 rgb(130, 130, 130), 0 .11em 0 rgba(0, 0, 0, .4), 0 .1em .11em rgba(0, 0, 0, .9);
+			}
+
+
+
+			.padded{
+				padding-top: 3em;
+				padding-bottom: 3em;
+			}
+
+			button{
+				background: transparent;
+				border: 4px solid black;
+				font-size: 3em;
+			}
+
+
+		</style>
+
+		<div id="mainPopup">
+			<div class="logo">
+				<div class="logo_wrap">
+					<img src="img/logo.svg"></img>
+				</div>
+				<div class="title">CouchMode</div>
+			</div>
+		<h1>Couchsit for Xfinity Live TV.</h1>
+		<h2> Getting started </h2>
+		<p>Couchsit is a Chrome Extension that turns your browser into a set-top box for watching live television. <br>A minimalist onscreen display lets you see the channel you&quot;re watching</p>
+		<p> It is somewhat similar to <a href="https://vimeo.com/couchmode">Vimeo Couch mode</a> or <a href="https://www.youtube.com/tv#/">Youtube leanback mode</a>, but for live TV. </p>
+		<p>To get started, you&quot;ll need:<br>
+		<ol>
+			<li>A Comcast Xfinity account with subscription to channels. &quot;remember me&quot; must be used to store the account details in the browser</li>
+			<li>A remote and remote software - For mac, I recommend <a href="https://www.iospirit.com/products/remotebuddy/">Remote Buddy</a></li>
+			<li> Map your remote control buttons to the following:
+				<ul>
+					<li><kbd>o</kbd> Channel Up </li>
+					<li><kbd>p</kbd> Channel Down </li>
+					<li><kbd>w</kbd> Change channel to selection </li>
+				<ul>
+			</li>
+		</ol>
+		
+		<p>That&quot;s about all there is to it.</p>
+		<p class="padded">
+			<button id="playnow">Play TV Now</button>
+		</p>
+
+
+		<h2> Contributing </h2>
+		<p>If you want to contribute, check out this extension&quot;s github</p>
+
+		<h2> Author </h2>
+		<p>Ben Davey. 2014. Made with <span style="font-size: 2em;">&hearts;</span> in San Francisco.
+		<br>I am not affiliated with Comcast or any of its brands.<p>
+
+		</div>
+	</body>
+</html>

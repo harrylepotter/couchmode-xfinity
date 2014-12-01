@@ -8,3 +8,10 @@ chrome.extension.onMessage.addListener(
   	chrome.pageAction.show(sender.tab.id);
     sendResponse(settings.toObject());
   });
+
+if (!window.localStorage.getItem('hasSeenIntro')) {
+  window.localStorage.setItem('hasSeenIntro', 'yep');
+  chrome.tabs.create({
+    url: 'fragments/popup.html'
+  });
+}

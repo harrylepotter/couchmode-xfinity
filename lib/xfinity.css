@@ -5,7 +5,7 @@
 	position: fixed;
 	width: 90vw;
 	height: 150px;
-	background-color: red;
+	background-color: rgb(255, 205,0);
 	z-index: 999990;
 	left: 5vw;
 	bottom: 5vw;
@@ -21,6 +21,12 @@
 .current_time{
 	text-align: right;
 	font-size: 1.5em;
+	border-bottom: 1px solid black;
+}
+
+.current_time::before{
+	content: 'Time Now:';
+	margin-right: 4px;
 }
 
 .container{
@@ -34,55 +40,57 @@
 
 .channel{
 	min-height: 115px;
- 	background-color: rgb(255, 205,0);
  	display: flex;
- 	flex-direction: column;
+ 	flex-direction: row;
+}
+
+.channel .right{
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	padding-right: 18px;
 }
 
 .channel .channel_image{
-	position: static;
-	/*top: 51px;*/
-	left: 7px;
+	padding-top: 32px;
+	padding-right: 5px;
 }
 
-.channel .channel_title{
+.channel .right .channel_title{
 	text-transform: uppercase;
     font-family: 'Lato';
     font-size: 3em;
-    padding-left: 115px;
 }
 
-.channel .playing_now{
+.channel .right .playing_now{
 	display: block;
 	font-family: 'Lato';
 	font-size: 1.5em;
-	padding-left: 115px;
 }
 
-.channel .playing_now .title {
+.channel .right .playing_now .title {
 	display: inline-block;
 	float: left;
 }
 
-.channel .playing_now .time {
+.channel .right .playing_now .time {
 	display: inline-block;
 	float: right;
 	color: gray;
 }
 
-.channel .playing_next{
+.channel .right .playing_next{
 	display: block;
 	font-family: 'Lato';
 	font-size: 1.5em;
-	padding-left: 115px;
 }
 
-.channel .playing_next .title {
+.channel .right .playing_next .title {
 	display: inline-block;
 	float: left;
 }
 
-.channel .playing_next .time {
+.channel .right .playing_next .time {
 	display: inline-block;
 	float: right;
 	color: gray;

@@ -1,24 +1,18 @@
 {
-	"name": "XFINITY REMOTE",
-	"permissions" : ["http://xfinitytv.comcast.net/*", "https://xfinitytv.comcast.net/*"],
+	"name": "CouchMode for Xfinity Live TV",
+	"permissions" : ["http://xfinitytv.comcast.net/live/network/*", "https://xfinitytv.comcast.net/live/network/*"],
 	"version": "0.1",
 	"manifest_version" : 2,
-	"description": "SAMPLE_DESCRIPTION",
+	"description": "Provide vimeo-leanback style browsing of Xfinity live channels using a remote control",
 	"background" : {
 		"page" : "background.html"
 	},
 	"page_action" :
 	{
-		"default_icon": {
-			"19": "icons/19.png",
-			"38": "icons/38.png"
-		},
-		"default_title" : "SAMPLE_TITLE",
-		"default_popup" : "fragments/popup.html"
 	},
 	"content_scripts": [
 	{
-		"matches": ["http://xfinitytv.comcast.net/*"],
+		"matches": ["http://xfinitytv.comcast.net/live/network/*"],
 		"css" : ["lib/xfinity.css"],
 		"js": ["lib/jquery-1.8.3.min.js", "lib/moment.min.js", "lib/keyboard.js", "scripts/main.js"],
 		"run_at": "document_idle"

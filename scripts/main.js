@@ -28,7 +28,8 @@ var chDown = function () {
 var playCurrent = function () {
     showOSD();
     var channelUrl = getChannelUrl();
-    window.location.href = channelUrl;
+    if(window.location.href !== channelUrl)
+        window.location.href = channelUrl;
 };
 
 var resizeVideo = function () {
